@@ -47,7 +47,19 @@ $.ajax({
   });
 });
 
+//makeList function 
 function makeList(){
   let listItem = $("<li>").addClass("list-group-item").text(city);
   $(".list").append(listItem);
+}
+
+//currentConditions function
+function currentConditions(response){
+  //get the temperature and convert to celcius
+  let tempInCelcius = parseFloat(response.main.temp) - 273.15;
+  tempInCelcius = Math.floor(tempInCelcius);
+
+  $("#currentCity").empty();
+
+  //get and set the forcast content
 }
