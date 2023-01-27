@@ -12,3 +12,16 @@ $("#search-input").keypress(function(e){
   }
 });
 
+$("#search-button").on("click", function(){
+
+  $("#forecast-heading").addClass("show");
+
+  //get the value from user input
+  currentCity = $("#search-input").val().trim();
+
+  //clear input box
+  $("#search-input").val("");
+});
+
+//full URL to call API
+const queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + currentCity + apiKey;
