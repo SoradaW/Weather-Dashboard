@@ -43,7 +43,6 @@ $.ajax({
   currentConditions(response);
   currentForecast(response);
   makeList();
-
   });
 });
 
@@ -61,5 +60,14 @@ function currentConditions(response){
 
   $("#currentCity").empty();
 
-  //get and set the forcast content
+  //addClass to the forcast content
+
+  const card = $("<div>").addClass("card");
+  const cardBody = $("<div>").addClass("card-body");
+  const city = $("<h4>").addClass("card-title").text(response.name);
+  const cityDate = $("<h4>").addClass("card-title").text(date.toLocaleDateString("en-gb"));
+  const temperature = $("<p>").addClass("card-text current-temp").text("Temparature: " + tempInCelcius + " °C");
+  const humidity = $("<p>").addClass("card-text current-humidity").text("Humidity: " + response.main.humidity + "%");
+  const wind = $("<p>").addClass("card-text current-wind").text("Wind Speed: " + response.wind.speed + " MPH");
+  const image = $("<img>").attr("src", "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png")
 }
