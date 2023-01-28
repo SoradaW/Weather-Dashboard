@@ -22,6 +22,7 @@ function currentConditions(city){
     let iconImg = response.weather[0].icon;
     let iconURL = `https://openweathermap.org/img/w/${iconImg}.png`;
     
+    //displays info below in main card
     let currentCity = $(`
       <h2 id="current-city">
         ${response.name} ${today} <img src="${iconURL}" alt="${response.weather[0].description}" /> </h2>
@@ -58,6 +59,7 @@ function futureConditions(lat, lon){
       let currentDate = moment().format("dddd Do MMM, YYYY");
       let iconURL = `<img src="https://openweathermap.org/img/w/${cityDetail.icon}.png" alt="${response.daily[i].weather[0].main}" />`;
 
+      //displays info below in future card
       let futureCard = $(`
         <div class="pl-3">
           <div class="card pl-3 pt-3 mb-3 bg-primary text-light" style="width: 12rem;>
@@ -93,4 +95,22 @@ $("#search-button").on("click", function(e){
 
   localStorage.setItem("city", JSON.stringify(searchHistoryList));
   console.log(searchHistoryList);
+});
+
+//presented with current and future conditions for new entry city
+$(document).on("click", "list-group-item", function(){
+  let listCity = $(this).text();
+  currentConditions(listCity);
+});
+
+//displays previous searched when reload page
+$(document).ready(function(){
+  let searchHistoryArr = JSON.parse(localStorage.getItem("city"));
+
+  if (searchHistoryArr !== null) {
+    let previousIndex = searchHistoryArr.length - 1;
+    let previousCity = searchHistoryArr[previousIndex];
+    currentConditions(previousCity);
+    console.log(`Previous searched city: ${previousCity}`);
+  }
 });
