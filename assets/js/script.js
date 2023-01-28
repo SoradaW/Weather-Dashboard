@@ -75,3 +75,19 @@ function futureConditions(lat, lon){
     }
   });
 }
+
+//add event listener 
+$("#search-button").on("click", function(e){
+  e.preventDefault();
+
+  let city = $("#enter-city").val().trim();
+  currentConditions(city);
+  if (!searchHistoryList.includes(city)){
+    searchHistoryList.push(city);
+
+    let searchCity = $(`
+      <li class="list-group-item">${city}</li>
+      `);
+    $("#search-history").append(searchCity);
+  };
+})
