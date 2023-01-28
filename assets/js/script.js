@@ -6,7 +6,8 @@ let city = $("#search-input").val().trim();
 let date = new Date();
 
 $("#search-input").keypress(function(e){
-  if(e.keyCode === 13){
+  //keyCode 13 is the "Enter" key
+  if(e.keyCode === "Enter"){
     e.preventDefault();
     $("#search-button").click();
   }
@@ -28,7 +29,8 @@ const queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + 
 $.ajax({
  url: queryURL,
  method: "GET"
-}).then(function(response){
+})
+.then(function(response){
   console.log(response);
 
   console.log(response.name);
@@ -61,7 +63,6 @@ function currentConditions(response){
   $("#currentCity").empty();
 
   //addClass to the forcast content
-
   const card = $("<div>").addClass("card");
   const cardBody = $("<div>").addClass("card-body");
   const city = $("<h4>").addClass("card-title").text(response.name);
@@ -69,5 +70,23 @@ function currentConditions(response){
   const temperature = $("<p>").addClass("card-text current-temp").text("Temparature: " + tempInCelcius + " °C");
   const humidity = $("<p>").addClass("card-text current-humidity").text("Humidity: " + response.main.humidity + "%");
   const wind = $("<p>").addClass("card-text current-wind").text("Wind Speed: " + response.wind.speed + " MPH");
-  const image = $("<img>").attr("src", "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png")
+  const image = $("<img>").attr("src", "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png");
+
+  //add elements to page
+  city.append(cityDate, image);
+  cardBody.append(city, temperature, humidity, wind);
+  card.append(cardBody);
+  $("#currentCity").append(card);
+}
+
+//currentForecast function
+function currentForecast(){
+
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  })
+  .then(function(response){
+    console.log(response);
+  })
 }
