@@ -17,7 +17,7 @@ function currentConditions(city){
       console.log(response);
 
     $("#weather-content").css("display", "block");
-    $("#current-city").empty();
+    $("#current-city").empty(); //remove all child nodes of the set of matched elements from the DOM
 
     let iconImg = response.weather[0].icon;
     let iconURL = `https://openweathermap.org/img/w/${iconImg}.png`;
@@ -31,5 +31,47 @@ function currentConditions(city){
     `);
 
     $("#city-detail").append(currentCity);
+  });
+}
+
+//function for future condition
+function futureConditions(lat, lon){
+  //5 days forecast
+  let futureURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=current,minutely,hourly,alerts&appid=${APIKey}`;
+
+    $.ajax({
+      url: futureURL,
+      method: "GET"
+    }).then(function(response){
+      console.log(response);
+
+    $("#five-day").empty();
+
+    for(let i = 1; i < 6; i++){
+      let cityDetail = {
+        date: response.daily[i].dt,
+        icon: response.daily[i].weather[0].icon,
+        temp: response.daily[i].temp.day,
+        humidity: response.daily[i].humidity
+      };
+
+      let currentDate = moment().format("dddd Do MMM, YYYY");
+      let iconURL = `<img src="https://openweathermap.org/img/w/${cityDetail.icon}.png" alt="${response.daily[i].weather[0].main}" />`;
+
+      let futureCard = $(`
+        <div class="pl-3">
+          <div class="card pl-3 pt-3 mb-3 bg-primary text-light" style="width: 12rem;>
+            <div class="card-body">
+              <h5>${currentDate}</h5>
+              <p>${iconURL}</p>
+              <p>Temp: ${cityDetail.temp} °C</p>
+              <p>Humidity: ${cityDetail.humidity}\%</p>
+            </div>
+          </div>
+        <div>
+      `);
+
+      $("#five-day").append(futureCard);
+    }
   });
 }
