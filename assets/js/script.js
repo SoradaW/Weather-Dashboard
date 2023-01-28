@@ -106,7 +106,7 @@ $(document).on("click", "list-group-item", function(){
   currentConditions(listCity);
 });
 
-//displays previous searched when reload page
+//displays previous searched when reload page .ready
 $(document).ready(function(){
   let searchHistoryArr = JSON.parse(localStorage.getItem("city"));
 
