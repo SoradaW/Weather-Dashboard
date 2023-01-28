@@ -56,9 +56,9 @@ function makeList(){
 
 //currentConditions function
 function currentConditions(response){
-  //get the temperature and convert to celcius
-  let tempInCelcius = parseFloat(response.main.temp) - 273.15;
-  tempInCelcius = Math.floor(tempInCelcius);
+  //get the temperature and convert from Kalvin to celcius
+  let tempInCelcius = parseFloat(response.main.temp) - 273.15; //parseFloat() method parses a value as a string and returns the first number
+  tempInCelcius = Math.floor(tempInCelcius); //Math.floor() method rounds a number DOWN to the nearest integer
 
   $("#currentCity").empty();
 
@@ -88,5 +88,15 @@ function currentForecast(){
   })
   .then(function(response){
     console.log(response);
+    console.log(response.dt);
+
+    $("#forecast").empty();
+
+    let results = response.list;
+    console.log(results);
+
+    for(let i =0; i < results.length; i++){
+      let day = Number(re)
+    }
   })
 }
