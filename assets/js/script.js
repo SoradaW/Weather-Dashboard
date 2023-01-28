@@ -1,9 +1,8 @@
 // store api key from OpenWeatherMap 
-const APIKey = "&0a85def07157d9d6ca1994063d06cb9e";
+const APIKey = "0a85def07157d9d6ca1994063d06cb9e";
 
 //store the value of the input
-let city = $("#search-input").val();
-let date = new Date();
+let today = moment().format("L"); //L=Month numeral, day of month, year
 let searchHistoryList = [];
 
 //currentConditions function
@@ -13,25 +12,29 @@ function currentConditions(city){
     $.ajax({
       url: queryURL,
       method: "GET"
-    }).then(function(response){
-      console.log(response);
+    }).then(function(currentResponse){
+      console.log(currentResponse);
 
     $("#weather-content").css("display", "block");
-    $("#current-city").empty(); //remove all child nodes of the set of matched elements from the DOM
+    $("#city-detail").empty(); //remove all child nodes of the set of matched elements from the DOM
 
-    let iconImg = response.weather[0].icon;
+    let iconImg = currentResponse.weather[0].icon;
     let iconURL = `https://openweathermap.org/img/w/${iconImg}.png`;
     
     //displays info below in main card
     let currentCity = $(`
       <h2 id="current-city">
-        ${response.name} ${today} <img src="${iconURL}" alt="${response.weather[0].description}" /> </h2>
-      <p>Temperature: ${response.main.temp} °C</p>
-      <p>Humidity: ${response.main.humidity} %</p>
-      <p>Wind Speed: ${response.wind.speed} MPH</p>
+        ${currentResponse.name} ${today} <img src="${iconURL}" alt="${currentResponse.weather[0].description}" /> </h2>
+      <p>Temperature: ${currentResponse.main.temp} °C</p>
+      <p>Humidity: ${currentResponse.main.humidity}%</p>
+      <p>Wind Speed: ${currentResponse.wind.speed} MPH</p>
     `);
 
+    let lat = currentResponse.coord.lat;
+    let lon = currentResponse.coord.lon;
+   
     $("#city-detail").append(currentCity);
+    futureConditions(lat, lon);
   });
 }
 
@@ -43,21 +46,21 @@ function futureConditions(lat, lon){
     $.ajax({
       url: futureURL,
       method: "GET"
-    }).then(function(response){
-      console.log(response);
+    }).then(function(futureResponse){
+      console.log(futureResponse);
 
     $("#five-day").empty();
 
     for(let i = 1; i < 6; i++){
       let cityDetail = {
-        date: response.daily[i].dt,
-        icon: response.daily[i].weather[0].icon,
-        temp: response.daily[i].temp.day,
-        humidity: response.daily[i].humidity
+        date: futureResponse.daily[i].dt,
+        icon: futureResponse.daily[i].weather[0].icon,
+        temp: futureResponse.daily[i].temp.day,
+        humidity: futureResponse.daily[i].humidity
       };
 
-      let currentDate = moment().format("dddd Do MMM, YYYY");
-      let iconURL = `<img src="https://openweathermap.org/img/w/${cityDetail.icon}.png" alt="${response.daily[i].weather[0].main}" />`;
+      let currentDate = moment.unix(cityDetail.date).format("dddd Do MMM, YYYY");
+      let iconURL = `<img src="https://openweathermap.org/img/w/${cityDetail.icon}.png" alt="${futureResponse.daily[i].weather[0].main}" />`;
 
       //displays info below in future card
       let futureCard = $(`
@@ -67,7 +70,7 @@ function futureConditions(lat, lon){
               <h5>${currentDate}</h5>
               <p>${iconURL}</p>
               <p>Temp: ${cityDetail.temp} °C</p>
-              <p>Humidity: ${cityDetail.humidity}\%</p>
+              <p>Humidity: ${cityDetail.humidity}%</p>
             </div>
           </div>
         <div>
