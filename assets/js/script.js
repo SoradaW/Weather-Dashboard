@@ -5,6 +5,10 @@ const APIKey = "&0a85def07157d9d6ca1994063d06cb9e";
 let city = $("#search-input").val().trim();
 let date = new Date();
 
+
+
+
+
 $("#search-input").keypress(function(e){
   //keyCode 13 is the "Enter" key
   if(e.keyCode === "Enter"){
@@ -54,14 +58,27 @@ function makeList(){
   $(".list").append(listItem);
 }
 
+
+
+
 //currentConditions function
-function currentConditions(response){
+function currentConditions(city){
+  let queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${APIKey}`;
+
   //get the temperature and convert from Kalvin to celcius
-  let tempInCelcius = parseFloat(response.main.temp) - 273.15; //parseFloat() method parses a value as a string and returns the first number
-  tempInCelcius = Math.floor(tempInCelcius); //Math.floor() method rounds a number DOWN to the nearest integer
+  //let tempInCelcius = parseFloat(response.main.temp) - 273.15; //parseFloat() method parses a value as a string and returns the first number
+  //tempInCelcius = Math.floor(tempInCelcius); //Math.floor() method rounds a number DOWN to the nearest integer
 
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  }).then(function(response){
+    console.log(response);
+
+  $("#currentCity").css("display", "block");
   $("#currentCity").empty();
-
+  })
+  
   //addClass to the forcast content
   const card = $("<div>").addClass("card");
   const cardBody = $("<div>").addClass("card-body");
@@ -78,6 +95,10 @@ function currentConditions(response){
   card.append(cardBody);
   $("#currentCity").append(card);
 }
+
+
+
+
 
 //currentForecast function
 function currentForecast(){
@@ -99,4 +120,16 @@ function currentForecast(){
       let day = Number(re)
     }
   })
+}
+
+function getCurrentConditions(city){
+  let queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${APIKey}`;
+
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  }).then(function(city){
+    console.log(city);
+  })
+
 }
