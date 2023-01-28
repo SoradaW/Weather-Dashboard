@@ -90,4 +90,7 @@ $("#search-button").on("click", function(e){
       `);
     $("#search-history").append(searchCity);
   };
-})
+
+  localStorage.setItem("city", JSON.stringify(searchHistoryList));
+  console.log(searchHistoryList);
+});
