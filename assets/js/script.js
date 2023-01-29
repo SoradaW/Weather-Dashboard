@@ -97,6 +97,9 @@ $("#search-button").on("click", function(e){
   e.preventDefault();
 
   let city = $("#enter-city").val().trim();
+  //clear input box
+  $("#enter-city").val("");
+
   currentConditions(city);
   if (!searchHistoryList.includes(city)){
     searchHistoryList.push(city);

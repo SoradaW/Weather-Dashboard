@@ -1,0 +1,60 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Chivo', sans-serif;
+}
+
+body {
+  background-color: #7f8381;
+}
+
+h1 {
+  font-size: 60px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  color: #f8f8ff;
+}
+
+h2, h3, h4 {
+  color: #f8f8ff;
+}
+
+.btn-primary{
+  background-color: rgb(20, 127, 220)!important;
+}
+
+#weather-content {
+  display: none;
+}
+
+.navbar {
+  height: 200px!important;
+}
+
+#search-results,
+#city-detail,
+.card {
+  background-color: #0d5a78!important;
+}
+
+#search-results {
+  height: 100vh;
+}
+
+#five-day .card {
+  border: 1px solid white!important;
+}
+
+#search-history li {
+  background-color: #5e6c6a96;
+  color: #D9B779!important;
+}
+
+p {
+  color: #D9B779;
+}
+
+
+
+
