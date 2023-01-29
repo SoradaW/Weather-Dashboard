@@ -1,4 +1,4 @@
-# Server-Side APIs: Weather Dashboard <img src="assets/images/Weather.png" width="40px">
+# Server-Side APIs: Weather Dashboard <img src="assets/images/cloudy.png" width="40px">
 
 
 A weather dashboard application with search functionality to find current weather conditions and the future weather outlook for multiple cities.
