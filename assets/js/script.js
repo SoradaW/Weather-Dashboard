@@ -83,7 +83,16 @@ function futureConditions(lat, lon){
   }); 
 }
 
-//add event listener
+//add event listener on keypress
+$("#enter-city").keypress(function(e){
+  //keyCode 13 is the "Enter" key
+  if(e.keyCode === 13){
+    e.preventDefault();
+    $("#search-button").click();
+  }
+});
+
+//add event listener on click button
 $("#search-button").on("click", function(e){
   e.preventDefault();
 
