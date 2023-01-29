@@ -1,4 +1,4 @@
-# Server-Side APIs: Weather Dashboard <img src="assets/Images/Weather.png" width="40px">
+# Server-Side APIs: Weather Dashboard <img src="assets/images/Weather.png" width="40px">
 
 
 A weather dashboard application with search functionality to find current weather conditions and the future weather outlook for multiple cities.
@@ -25,7 +25,7 @@ A weather dashboard application with search functionality to find current weathe
 
 The following image shows the web application's appearance and functionality:
 
-![The weather app includes a search option, a list of cities, and a five-day forecast and current weather conditions for London.](assets/Images/Weather-Dashboard.gif)
+![The weather app includes a search option, a list of cities, and a five-day forecast and current weather conditions for London.](assets/images/Weather-Dashboard.gif)
 
 
 

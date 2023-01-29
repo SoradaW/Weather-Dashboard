@@ -2,7 +2,7 @@
 const APIKey = "d1e2d0763204896fd894698f5c6e27ee";
 
 //store the value of the input
-let today = moment().format("L"); //L=Month numeral, day of month, year
+let today = moment().format("(DD/MM/YYYY)");
 let searchHistoryList = [];
 
 //currentConditions function
@@ -19,8 +19,8 @@ function currentConditions(city){
     $("#weather-content").css("display", "block");
     $("#city-detail").empty(); //remove all child nodes of the set of matched elements from the DOM
         
-    let iconImg = currentResponse.weather[0].icon;
-    let iconURL = `https://openweathermap.org/img/w/${iconImg}.png`;
+    let iconWeather = currentResponse.weather[0].icon;
+    let iconURL = `https://openweathermap.org/img/w/${iconWeather}.png`;
 
     //displays info below in main card
     let currentCity = $(`
@@ -61,7 +61,7 @@ function futureConditions(lat, lon){
       };
 
       //The moment().unix() function is used to get the number of seconds since the Unix Epoch
-      let currentDate = moment.unix(cityDetail.date).format("MM/DD/YYYY");
+      let futureDate = moment.unix(cityDetail.date).format("DD/MM/YYYY");
       let iconURL = `<img src="https://openweathermap.org/img/w/${cityDetail.icon}.png" alt="${futureResponse.daily[i].weather[0].main}" />`;
 
       //displays info below in future card
@@ -69,7 +69,7 @@ function futureConditions(lat, lon){
         <div class="pl-3">
           <div class="card pl-3 pt-3 mb-3 bg-primary text-light" style="width: 12rem";>
             <div class="card-body">
-              <h5>${currentDate}</h5>
+              <h5>${futureDate}</h5>
               <p>${iconURL}</p>
               <p>Temp: ${cityDetail.temp} °C</p>
               <p>Humidity: ${cityDetail.humidity}%</p>                           
