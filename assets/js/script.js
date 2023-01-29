@@ -1,5 +1,5 @@
 // store api key from OpenWeatherMap 
-const APIKey = "0a85def07157d9d6ca1994063d06cb9e";
+const APIKey = "d1e2d0763204896fd894698f5c6e27ee";
 
 //store the value of the input
 let today = moment().format("L"); //L=Month numeral, day of month, year
@@ -8,7 +8,7 @@ let searchHistoryList = [];
 //currentConditions function
 function currentConditions(city){
 
-  let queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${APIKey}`;
+  let queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${APIKey}`;
 
   $.ajax({
     url: queryURL,
@@ -26,9 +26,9 @@ function currentConditions(city){
     let currentCity = $(`
       <h2 id="current-city">
         ${currentResponse.name} ${today} <img src="${iconURL}" alt="${currentResponse.weather[0].description}" /> </h2>
-      <p>Temperature: ${currentResponse.main.temp} °F</p>
+      <p>Temperature: ${currentResponse.main.temp} °C</p>
       <p>Humidity: ${currentResponse.main.humidity}%</p>
-      <p>Wind Speed: ${currentResponse.wind.speed} MPH</p>
+      <p>Wind Speed: ${currentResponse.wind.speed} KPH</p>
    `);
     let lat = currentResponse.coord.lat;
     let lon = currentResponse.coord.lon;
@@ -42,7 +42,7 @@ function currentConditions(city){
 function futureConditions(lat, lon){
 
   //5 days forecast
-  let futureURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&exclude=current,minutely,hourly,alerts&appid=${APIKey}`;
+  let futureURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=current,minutely,hourly,alerts&appid=${APIKey}`;
 
   $.ajax({
     url: futureURL,
@@ -60,18 +60,18 @@ function futureConditions(lat, lon){
         humidity: futureResponse.daily[i].humidity
       };
 
-    //The moment().unix() function is used to get the number of seconds since the Unix Epoch
+      //The moment().unix() function is used to get the number of seconds since the Unix Epoch
       let currentDate = moment.unix(cityDetail.date).format("MM/DD/YYYY");
       let iconURL = `<img src="https://openweathermap.org/img/w/${cityDetail.icon}.png" alt="${futureResponse.daily[i].weather[0].main}" />`;
 
-    //displays info below in future card
+      //displays info below in future card
       let futureCard = $(`
         <div class="pl-3">
-          <div class="card pl-3 pt-3 mb-3 bg-primary text-light" style="width: 12rem;>
+          <div class="card pl-3 pt-3 mb-3 bg-primary text-light" style="width: 12rem";>
             <div class="card-body">
               <h5>${currentDate}</h5>
               <p>${iconURL}</p>
-              <p>Temp: ${cityDetail.temp} °F</p>
+              <p>Temp: ${cityDetail.temp} °C</p>
               <p>Humidity: ${cityDetail.humidity}%</p>                           
             </div>
           </div>
