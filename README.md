@@ -28,10 +28,7 @@ The following image shows the web application's appearance and functionality:
 ![The weather app includes a search option, a list of cities, and a five-day forecast and current weather conditions for London.](assets/Images/Weather-Dashboard.gif)
 
 
-
-## Live version
-
-https://soradaw.github.io/Weather-Dashboard/
+[Live Website](https://soradaw.github.io/Weather-Dashboard/)
 
 ---
 
