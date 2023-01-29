@@ -7,20 +7,21 @@ let searchHistoryList = [];
 
 //currentConditions function
 function currentConditions(city){
+
   let queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${APIKey}`;
 
-    $.ajax({
-      url: queryURL,
-      method: "GET"
-    }).then(function(currentResponse){
-      console.log(currentResponse);
-
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  }).then(function(currentResponse){
+    console.log(currentResponse);
+        
     $("#weather-content").css("display", "block");
     $("#city-detail").empty(); //remove all child nodes of the set of matched elements from the DOM
-
+        
     let iconImg = currentResponse.weather[0].icon;
     let iconURL = `https://openweathermap.org/img/w/${iconImg}.png`;
-    
+
     //displays info below in main card
     let currentCity = $(`
       <h2 id="current-city">
@@ -28,11 +29,10 @@ function currentConditions(city){
       <p>Temperature: ${currentResponse.main.temp} °C</p>
       <p>Humidity: ${currentResponse.main.humidity}%</p>
       <p>Wind Speed: ${currentResponse.wind.speed} MPH</p>
-    `);
-
+   `);
     let lat = currentResponse.coord.lat;
     let lon = currentResponse.coord.lon;
-   
+
     $("#city-detail").append(currentCity);
     futureConditions(lat, lon);
   });
@@ -40,17 +40,18 @@ function currentConditions(city){
 
 //function for future condition
 function futureConditions(lat, lon){
+
   //5 days forecast
   let futureURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=current,minutely,hourly,alerts&appid=${APIKey}`;
 
-    $.ajax({
-      url: futureURL,
-      method: "GET"
-    }).then(function(futureResponse){
-      console.log(futureResponse);
+  $.ajax({
+    url: futureURL,
+    method: "GET"
+  }).then(function(futureResponse){
+    console.log(futureResponse);
 
     $("#five-day").empty();
-
+        
     for(let i = 1; i < 6; i++){
       let cityDetail = {
         date: futureResponse.daily[i].dt,
@@ -59,10 +60,11 @@ function futureConditions(lat, lon){
         humidity: futureResponse.daily[i].humidity
       };
 
-      let currentDate = moment.unix(cityDetail.date).format("dddd Do MMM, YYYY");
+    //The moment().unix() function is used to get the number of seconds since the Unix Epoch
+      let currentDate = moment.unix(cityDetail.date).format("MM/DD/YYYY");
       let iconURL = `<img src="https://openweathermap.org/img/w/${cityDetail.icon}.png" alt="${futureResponse.daily[i].weather[0].main}" />`;
 
-      //displays info below in future card
+    //displays info below in future card
       let futureCard = $(`
         <div class="pl-3">
           <div class="card pl-3 pt-3 mb-3 bg-primary text-light" style="width: 12rem;>
@@ -70,18 +72,18 @@ function futureConditions(lat, lon){
               <h5>${currentDate}</h5>
               <p>${iconURL}</p>
               <p>Temp: ${cityDetail.temp} °C</p>
-              <p>Humidity: ${cityDetail.humidity}%</p>
+              <p>Humidity: ${cityDetail.humidity}%</p>                           
             </div>
           </div>
-        <div>
+        </div>
       `);
 
       $("#five-day").append(futureCard);
     }
-  });
+  }); 
 }
 
-//add event listener 
+//add event listener
 $("#search-button").on("click", function(e){
   e.preventDefault();
 
@@ -89,19 +91,18 @@ $("#search-button").on("click", function(e){
   currentConditions(city);
   if (!searchHistoryList.includes(city)){
     searchHistoryList.push(city);
-
     let searchCity = $(`
       <li class="list-group-item">${city}</li>
       `);
     $("#search-history").append(searchCity);
   };
-
+  
   localStorage.setItem("city", JSON.stringify(searchHistoryList));
   console.log(searchHistoryList);
 });
 
 //presented with current and future conditions for new entry city
-$(document).on("click", "list-group-item", function(){
+$(document).on("click", ".list-group-item", function(){
   let listCity = $(this).text();
   currentConditions(listCity);
 });
