@@ -106,7 +106,7 @@ $("#search-button").on("click", function(e){
     let searchCity = $(`
       <li class="list-group-item">${city}</li>
       `);
-    $("#search-history").append(searchCity);
+    $("#search-history").prepend(searchCity);
   };
   
   localStorage.setItem("city", JSON.stringify(searchHistoryList));
