@@ -8,7 +8,7 @@ let searchHistoryList = [];
 //currentConditions function
 function currentConditions(city){
 
-  let queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${APIKey}`;
+  let queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${APIKey}`;
 
   $.ajax({
     url: queryURL,
@@ -26,7 +26,7 @@ function currentConditions(city){
     let currentCity = $(`
       <h2 id="current-city">
         ${currentResponse.name} ${today} <img src="${iconURL}" alt="${currentResponse.weather[0].description}" /> </h2>
-      <p>Temperature: ${currentResponse.main.temp} °C</p>
+      <p>Temperature: ${currentResponse.main.temp} °F</p>
       <p>Humidity: ${currentResponse.main.humidity}%</p>
       <p>Wind Speed: ${currentResponse.wind.speed} MPH</p>
    `);
@@ -42,7 +42,7 @@ function currentConditions(city){
 function futureConditions(lat, lon){
 
   //5 days forecast
-  let futureURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&exclude=current,minutely,hourly,alerts&appid=${APIKey}`;
+  let futureURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&exclude=current,minutely,hourly,alerts&appid=${APIKey}`;
 
   $.ajax({
     url: futureURL,
@@ -71,7 +71,7 @@ function futureConditions(lat, lon){
             <div class="card-body">
               <h5>${currentDate}</h5>
               <p>${iconURL}</p>
-              <p>Temp: ${cityDetail.temp} °C</p>
+              <p>Temp: ${cityDetail.temp} °F</p>
               <p>Humidity: ${cityDetail.humidity}%</p>                           
             </div>
           </div>
