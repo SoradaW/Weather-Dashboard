@@ -51,6 +51,11 @@ h2, h3, h4 {
   color: #D9B779!important;
 }
 
+#search-history li:hover {
+  background-color: #5e6c6a;
+  cursor: pointer;
+}
+
 p {
   color: #D9B779;
 }
